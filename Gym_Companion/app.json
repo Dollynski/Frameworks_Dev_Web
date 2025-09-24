@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Gym_Companion",
-    "slug": "Gym_Companion",
+    "name": "unisenac",
+    "slug": "unisenac",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "gymcompanion",
+    "scheme": "unisenac",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
