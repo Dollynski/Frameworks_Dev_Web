@@ -1,131 +1,151 @@
-import { CustomButton } from "@/components/CustomButton";
-import { CustomInput } from "@/components/CustomInput";
-import { styles } from "@/styles/auth/login.styles";
-import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
-import { useRef, useState } from "react";
-import {
-  Alert,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { authService } from '../../services/auth';
+import { CustomButton } from '@/components/CustomButton';
+import { CustomInput } from '@/components/CustomInput';
+import { router } from 'expo-router';
+import React, { useState, useRef } from 'react';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    Image, 
+    TouchableOpacity, 
+    ScrollView, 
+    KeyboardAvoidingView, 
+    Platform, 
+    Alert,
+    TextInput
+} from 'react-native';
 
-export default function Signup() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function SignupScreen() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // Refs para os inputs
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
   const handleSignUp = async () => {
     if (!name || !email || !password) {
-      Alert.alert('Error', 'Por favor, preencha todos os campos');
+      Alert.alert('Atenção', 'Por favor, preencha todos os campos.');
       return;
     }
-
-    const result = await authService.signup({
-      name,
-      email,
-      password,
-    });
-
-    if (result.success) {
-      router.replace('/projects');
-    } else {
-      Alert.alert('Error', result.message || 'Falha ao criar conta');
-    }
-  };
-
-  const handleLogin = () => {
-    router.push("/(auth)/login");
-  };
-
-  const handleBack = () => {
-    router.back();
+    
+    console.log('Tentando cadastrar com:', name, email, password);
   };
 
   return (
-    <LinearGradient colors={["#1a237e", "#b490dfff"]} style={styles.container}>
-      {/* KeyboardAvoidingView ajusta o layout quando o teclado é exibido
-              - iOS (padding): Adiciona padding inferior igual à altura do teclado
-              - Android (height): Ajusta a altura do container, pois o Android já
-                gerencia o redimensionamento da janela automaticamente
-          */}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.content}
-      >
-        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-          <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity>
-
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={styles.logoContainer}>
-            <Image
-              source={require("@/assets/images/react-logo.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
-
-          <View style={styles.formContainer}>
-            <CustomInput
-              placeholder="Nome Completo"
-              value={name}
-              onChangeText={setName}
-              autoCapitalize="words"
-              returnKeyType="next"
-              onSubmitEditing={() => emailInputRef.current?.focus()}
-            />
-
-            <CustomInput
-              ref={emailInputRef}
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              returnKeyType="next"
-              onSubmitEditing={() => passwordInputRef.current?.focus()}
-            />
-
-            <CustomInput
-              ref={passwordInputRef}
-              placeholder="Senha"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              returnKeyType="done"
-              onSubmitEditing={handleSignUp}
-            />
-
-            <CustomButton title="Entrar" onPress={handleSignUp} />
-
-            <View style={styles.signupContainer}>
-              <Text style={styles.signupText}>Já tem uma conta? </Text>
-              <CustomButton
-                title="Faça login"
-                variant="link"
-                onPress={handleLogin}
-                style={{ marginTop: 0 }}
-              />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.card}>
+            <View style={styles.logoContainer}>
+                <Image source={require('@/assets/images/logo.png')} style={styles.logo} />
+                <Text style={styles.appName}>Gym Companion</Text>
             </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </LinearGradient>
+
+            <Text style={styles.title}>Crie sua conta</Text>
+            
+            <CustomInput
+                placeholder="Nome Completo"
+                value={name}
+                onChangeText={setName}
+                autoCapitalize="words"
+                returnKeyType="next"
+                onSubmitEditing={() => emailInputRef.current?.focus()}
+            />
+            <CustomInput
+                ref={emailInputRef}
+                placeholder="seu@email.com"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+            />
+            <CustomInput
+                ref={passwordInputRef}
+                placeholder="Crie uma senha"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                returnKeyType="done"
+                onSubmitEditing={handleSignUp}
+            />
+
+            <CustomButton title="Cadastrar" onPress={handleSignUp} />
+
+            <View style={styles.footer}>
+                <Text style={styles.footerText}>Já tem uma conta?</Text>
+                <TouchableOpacity onPress={() => router.push('/(auth)/login')}>
+                <Text style={styles.linkText}>Faça Login</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#3b82f6', 
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  card: {
+    width: '90%',
+    maxWidth: 400,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 24,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 12,
+  },
+  appName: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#111827',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  footerText: {
+    fontSize: 16,
+    color: '#4b5563',
+  },
+  linkText: {
+    fontSize: 16,
+    color: '#3b82f6',
+    fontWeight: 'bold',
+    marginLeft: 5,
+  },
+});

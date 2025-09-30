@@ -1,20 +1,38 @@
-import { forwardRef } from 'react';
-import { TextInput, TextInputProps } from 'react-native';
+import React, { forwardRef, useState } from 'react';
+import { TextInput, TextInputProps, View } from 'react-native';
 import { styles } from './styles';
 
-interface CustomInputProps extends TextInputProps {
-  // Aqui podemos adicionar props adicionais específicas do nosso input
-}
+interface CustomInputProps extends TextInputProps {}
 
 export const CustomInput = forwardRef<TextInput, CustomInputProps>(
-  ({ style, placeholderTextColor = "#rgba(255, 255, 255, 0.7)", ...rest }, ref) => {
+  ({ style, onFocus, onBlur, ...props }, ref) => {
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = (event: any) => {
+      setIsFocused(true);
+      onFocus?.(event);
+    };
+
+    const handleBlur = (event: any) => {
+      setIsFocused(false);
+      onBlur?.(event);
+    };
+
     return (
-      <TextInput
-        ref={ref}
-        style={[styles.input, style]}
-        placeholderTextColor={placeholderTextColor}
-        {...rest}
-      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          ref={ref}
+          style={[
+            styles.input,
+            isFocused && styles.focusedInput,
+            style,
+          ]}
+          placeholderTextColor="#9ca3af"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          {...props}
+        />
+      </View>
     );
   }
 );
