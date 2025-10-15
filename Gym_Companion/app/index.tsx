@@ -4,9 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-// import { __DEV_MODE__ } from '../config/dev'; // Importa nossa chave de configuração
 
-// Fallback definition for __DEV_MODE__ if the module is missing
 const __DEV_MODE__ = { BYPASS_LOGIN: false };
 
 export default function Index() {
