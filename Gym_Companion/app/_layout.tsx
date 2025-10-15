@@ -1,10 +1,8 @@
 // app/_layout.tsx
 
-import { router, useSegments } from 'expo-router';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Stack } from 'expo-router';
-import { ActivityIndicator, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router, Stack, useSegments } from 'expo-router';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // Criando um Contexto de Autenticação
 const AuthContext = createContext<{ user: any; signOut: () => void; signIn: (token: string) => void } | null>(null);
@@ -36,8 +34,20 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 // Hook que protege as rotas
 function useProtectedRoute(user: any) {
     const segments = useSegments();
+    const [navigationReady, setNavigationReady] = useState(false);
 
     useEffect(() => {
+        // Aguarda o próximo frame para garantir que o navigator está montado
+        const timeout = setTimeout(() => {
+            setNavigationReady(true);
+        }, 0);
+        
+        return () => clearTimeout(timeout);
+    }, []);
+
+    useEffect(() => {
+        if (!navigationReady) return;
+        
         const inAuthGroup = segments[0] === '(auth)';
 
         if (!user && !inAuthGroup) {
@@ -46,7 +56,7 @@ function useProtectedRoute(user: any) {
             // CORREÇÃO: Redireciona para o grupo (projects)
             router.replace('/projects');
         }
-    }, [user, segments]);
+    }, [user, segments, navigationReady]);
 }
 
 export default function RootLayout() {
@@ -70,15 +80,8 @@ function RootLayoutNav() {
     });
   }, []);
   
-  useProtectedRoute(auth?.user);
-  
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#3b82f6" />
-      </View>
-    );
-  }
+  // Só executa a proteção de rota após o carregamento
+  useProtectedRoute(isLoading ? null : auth?.user);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
