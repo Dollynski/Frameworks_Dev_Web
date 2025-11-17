@@ -11,7 +11,7 @@ interface Treino {
 
 interface HomeDashboardProps {
   userName?: string;
-  treinosDaSemana: Treino[]; // Lista de treinos para exibir
+  treinosDaSemana: Treino[];
 }
 
 export function HomeDashboard({ userName, treinosDaSemana }: HomeDashboardProps) {
@@ -33,7 +33,7 @@ export function HomeDashboard({ userName, treinosDaSemana }: HomeDashboardProps)
           </Text>
         </View>
 
-        {/* Card de Calorias */}
+        {/* Card de Calorias (Exemplo) */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Resumo de Calorias</Text>
           <View style={styles.cardContent}>
@@ -45,13 +45,12 @@ export function HomeDashboard({ userName, treinosDaSemana }: HomeDashboardProps)
           </TouchableOpacity>
         </View>
 
-        {/* Lista de Treinos */}
+        {/* Lista de Treinos (Exemplo) */}
         <Text style={styles.listHeader}>Seus treinos da semana</Text>
         <FlatList
           data={treinosDaSemana}
           renderItem={renderTreinoItem}
           keyExtractor={(item) => item.id}
-          // Para evitar o scroll da FlatList dentro da ScrollView
           scrollEnabled={false} 
         />
       </View>

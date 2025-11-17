@@ -3,19 +3,19 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb', 
+    backgroundColor: '#f9fafb',
   },
   content: {
     paddingHorizontal: 20,
+    paddingVertical: 24, // Adicionado espaço no topo e base
   },
   header: {
-    marginTop: 24,
     marginBottom: 24,
   },
   headerText: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#111827', 
+    color: '#111827',
     lineHeight: 36,
   },
   highlight: {
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#e5e7eb', 
+    borderColor: '#e5e7eb',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1f2937', 
+    color: '#1f2937',
     marginBottom: 16,
   },
   cardContent: {
@@ -47,10 +47,10 @@ export const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
-    color: '#4b5563', 
+    color: '#4b5563',
   },
   button: {
-    backgroundColor: '#3b82f6', 
+    backgroundColor: '#3b82f6',
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 20,

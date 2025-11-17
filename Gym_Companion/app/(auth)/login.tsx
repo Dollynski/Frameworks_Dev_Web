@@ -2,21 +2,22 @@ import { CustomButton } from '@/components/CustomButton';
 import { CustomInput } from '@/components/CustomInput';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-// O 'Alert' não é mais necessário
+// O 'Alert' não é mais necessário para esta versão demo
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // --- MUDANÇA AQUI ---
-  // Removemos a validação e a lógica da API.
-  // A função agora só navega para a tela principal.
+  // --- MUDANÇA APLICADA AQUI ---
+  // Esta função agora é chamada quando o botão "Entrar" é pressionado.
   const handleLogin = () => {
-    // Usamos 'replace' para que o usuário não possa "voltar" para a tela de login
+    // Removemos toda a lógica de validação (if !email...) e console.log.
+    // Adicionamos o 'router.replace' para navegar para a tela de projetos.
+    // 'replace' é usado para que o usuário não possa apertar "Voltar" e retornar à tela de login.
     router.replace('/projects');
   };
-  // --- FIM DA MUDANÇA ---
+  // --- FIM DA MUDANÇA ---
 
   return (
     <KeyboardAvoidingView
@@ -46,6 +47,7 @@ export default function LoginScreen() {
             secureTextEntry
           />
 
+          {/* O onPress deste botão agora chama a nova função handleLogin */}
           <CustomButton title="Entrar" onPress={handleLogin} />
 
           <View style={styles.footer}>
@@ -60,7 +62,7 @@ export default function LoginScreen() {
   );
 }
 
-// O StyleSheet permanece exatamente o mesmo
+// O StyleSheet permanece o mesmo
 const styles = StyleSheet.create({
   container: {
     flex: 1,
