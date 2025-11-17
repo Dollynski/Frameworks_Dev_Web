@@ -8,7 +8,6 @@ const __DEV_MODE__ = { BYPASS_LOGIN: false };
 export default function Index() {
   
   useEffect(() => {
-    // Aguarda o próximo frame para garantir que o navigator está montado
     const timer = setTimeout(() => {
       // Se a chave para pular o login estiver ativa, redireciona imediatamente.
       if (__DEV_MODE__.BYPASS_LOGIN) {

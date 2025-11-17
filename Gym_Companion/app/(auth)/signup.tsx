@@ -1,6 +1,6 @@
 import { CustomButton } from '@/components/CustomButton';
 import { CustomInput } from '@/components/CustomInput';
-import { useAuth } from '../_layout'; // <--- IMPORTANTE
+import { useAuth } from '../_layout'; 
 import { router } from 'expo-router';
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, TextInput } from 'react-native';
@@ -13,20 +13,16 @@ export default function SignupScreen() {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   
-  const { signIn } = useAuth(); // <--- Pegamos o signIn
+  const { signIn } = useAuth(); 
 
   const handleSignUp = () => {
-    // Loga o usuário automaticamente após "cadastrar"
     signIn('token-de-demonstracao');
   };
 
   return (
-     // ... (O restante do JSX continua igual, apenas certifique-se 
-     //      que o onPress do botão chame handleSignUp)
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.card}>
-            {/* ... logo e inputs ... */}
             
             <CustomInput
                 ref={passwordInputRef}

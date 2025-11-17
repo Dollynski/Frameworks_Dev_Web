@@ -1,10 +1,7 @@
-// app/_layout.tsx
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router, Stack, useSegments } from 'expo-router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// Criando um Contexto de Autenticação
 const AuthContext = createContext<{ user: any; signOut: () => void; signIn: (token: string) => void } | null>(null);
 
 export function useAuth() {
@@ -15,7 +12,6 @@ export function useAuth() {
   return context;
 }
 
-// Provedor de Autenticação
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<string | null>(null);
 
@@ -35,13 +31,11 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Hook que protege as rotas
 function useProtectedRoute(user: any) {
     const segments = useSegments();
     const [navigationReady, setNavigationReady] = useState(false);
 
     useEffect(() => {
-        // Aguarda o próximo frame para garantir que o navigator está montado
         const timeout = setTimeout(() => {
             setNavigationReady(true);
         }, 0);
@@ -57,7 +51,6 @@ function useProtectedRoute(user: any) {
         if (!user && !inAuthGroup) {
             router.replace('/(auth)/login');
         } else if (user && inAuthGroup) {
-            // CORREÇÃO: Redireciona para o grupo (projects)
             router.replace('/projects');
         }
     }, [user, segments, navigationReady]);

@@ -1,6 +1,6 @@
 import { CustomButton } from '@/components/CustomButton';
 import { CustomInput } from '@/components/CustomInput';
-import { useAuth } from '../_layout'; // <--- IMPORTANTE: Importe o hook do layout
+import { useAuth } from '../_layout'; 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 
@@ -8,7 +8,6 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  // Pegamos a função signIn do nosso contexto
   const { signIn } = useAuth();
 
   const handleLogin = () => {
@@ -44,15 +43,12 @@ export default function LoginScreen() {
           />
 
           <CustomButton title="Entrar" onPress={handleLogin} />
-
-          {/* ... rodapé ... */}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
-// ... styles (mantém igual)
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#3b82f6' },
   scrollContent: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },

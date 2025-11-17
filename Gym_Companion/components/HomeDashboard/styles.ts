@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 20,
-    paddingVertical: 24, // Adicionado espaço no topo e base
+    paddingVertical: 24, 
   },
   header: {
     marginBottom: 24,

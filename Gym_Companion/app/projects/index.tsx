@@ -1,5 +1,3 @@
-// app/projects/index.tsx
-
 import { HomeDashboard } from '@/components/HomeDashboard';
 import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import React from 'react';
@@ -17,7 +15,6 @@ export default function ProjectsIndex() {
   const userName = 'Douglas'; 
 
   return (
-    // Atualizamos o título para bater com a referência
     <DashboardLayout title="Início">
       <HomeDashboard 
         userName={userName} 
