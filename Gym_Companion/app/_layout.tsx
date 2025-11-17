@@ -8,7 +8,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const AuthContext = createContext<{ user: any; signOut: () => void; signIn: (token: string) => void } | null>(null);
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth deve ser usado dentro de um AuthProvider');
+  }
+  return context;
 }
 
 // Provedor de Autenticação
@@ -85,8 +89,7 @@ function RootLayoutNav() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {/* CORREÇÃO: Declara o grupo (projects) */}
-      <Stack.Screen name="(projects)" />
+      <Stack.Screen name="projects" />
       <Stack.Screen name="(auth)" />
     </Stack>
   );
