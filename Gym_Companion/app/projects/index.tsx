@@ -5,11 +5,13 @@ import { View, StyleSheet } from 'react-native';
 
 // Dados de exemplo (mock)
 const mockTreinos = [
-  { id: '1', nome: 'Treino A', foco: 'Peito, Ombro e Tríceps' },
-  { id: '2', nome: 'Treino B', foco: 'Costas e Bíceps' },
-  { id: '3', nome: 'Treino C', foco: 'Pernas Completas' },
-  { id: '4', nome: 'Treino D', foco: 'Cardio e Abdominais' },
+  { id: '1', nome: 'Dia 1', foco: 'Peito, Ombro e Tríceps', concluido: true }, // <--- JÁ FEZ!
+  { id: '2', nome: 'Dia 2', foco: 'Costas e Bíceps', concluido: false },
+  { id: '3', nome: 'Dia 3', foco: 'Pernas Completas', concluido: false },
+  { id: '4', nome: 'Dia 4', foco: 'Cardio e Abdominais', concluido: false },
 ];
+
+// ... resto do código
 
 export default function ProjectsIndex() {
   const userName = 'Douglas'; 

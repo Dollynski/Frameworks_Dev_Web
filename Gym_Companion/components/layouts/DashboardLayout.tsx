@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useAuth } from '@/app/_layout';
-import { router } from 'expo-router';
+import { router, usePathname } from 'expo-router'; // Adicionado usePathname
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -11,10 +11,16 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children, title = "Início" }: DashboardLayoutProps) {
   const { signOut } = useAuth();
+  const pathname = usePathname(); // Hook para pegar a rota atual
 
   const handleLogout = () => {
     signOut();
     router.replace('/(auth)/login');
+  };
+
+  // Função para verificar se o botão deve estar "Ativo" (Azul)
+  const isActive = (routeKey: string) => {
+    return pathname.includes(routeKey);
   };
 
   return (
@@ -30,8 +36,18 @@ export function DashboardLayout({ children, title = "Início" }: DashboardLayout
 
         {/* Menu de Navegação */}
         <View style={styles.menuContainer}>
-            <MenuItem icon="home-outline" label="Início" active />
-            <MenuItem icon="calendar-outline" label="Agenda" />
+            <MenuItem 
+                icon="home-outline" 
+                label="Início" 
+                active={isActive('projects')} 
+                onPress={() => router.push('/projects')}
+            />
+            <MenuItem 
+                icon="calendar-outline" 
+                label="Agenda" 
+                active={isActive('agenda')}
+                onPress={() => router.push('/agenda')}
+            />
         </View>
         
         {/* Botão de Logoff */}
@@ -67,10 +83,13 @@ export function DashboardLayout({ children, title = "Início" }: DashboardLayout
   );
 }
 
-// Componente para os itens do menu
-function MenuItem({ icon, label, active = false }: { icon: any, label: string, active?: boolean }) {
+// Componente para os itens do menu (Atualizado com onPress)
+function MenuItem({ icon, label, active = false, onPress }: { icon: any, label: string, active?: boolean, onPress?: () => void }) {
     return (
-        <TouchableOpacity style={[styles.menuItem, active && styles.menuItemActive]}>
+        <TouchableOpacity 
+            style={[styles.menuItem, active && styles.menuItemActive]} 
+            onPress={onPress}
+        >
             <Ionicons name={icon} size={22} color="#fff" />
             <Text style={[styles.menuItemText, active && styles.menuItemTextActive]}>{label}</Text>
         </TouchableOpacity>
